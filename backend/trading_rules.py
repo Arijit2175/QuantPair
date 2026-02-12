@@ -1,29 +1,29 @@
 import pandas as pd
-from typing import List, Dict
 
-def generate_trade_signals(zscore: pd.Series, entry_threshold: float = 2.0, exit_threshold: float = 0.5) -> pd.DataFrame:
+def generate_trade_signals(
+    zscore: pd.Series,
+    entry_threshold: float = 2.0,
+    exit_threshold: float = 0.0
+) -> pd.DataFrame:
+
+    position = 0
     signals = []
-    position = 0  
-    for z in zscore:
+
+    for t, z in zscore.items():
         if position == 0:
             if z > entry_threshold:
-                signals.append(-1)
-                position = -1
+                position = -1   
             elif z < -entry_threshold:
-                signals.append(1)
-                position = 1
-            else:
-                signals.append(0)
+                position = 1    
+
         elif position == 1:
-            if abs(z) < exit_threshold:
-                signals.append(0) 
+            if z >= exit_threshold:
                 position = 0
-            else:
-                signals.append(1) 
+
         elif position == -1:
-            if abs(z) < exit_threshold:
-                signals.append(0) 
+            if z <= -exit_threshold:
                 position = 0
-            else:
-                signals.append(-1)
-    return pd.DataFrame({'Signal': signals}, index=zscore.index)
+
+        signals.append(position)
+
+    return pd.DataFrame({"Position": signals}, index=zscore.index)

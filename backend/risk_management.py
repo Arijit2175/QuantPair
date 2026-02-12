@@ -1,22 +1,33 @@
 import pandas as pd
-from typing import Tuple, Dict
+import numpy as np
+from typing import Tuple
 
-def calculate_position_size(capital: float, price1: float, price2: float, volatility: float, risk_per_trade: float = 0.01) -> Tuple[int, int]:
+def calculate_position_size(
+    capital: float,
+    spread_volatility: float,
+    risk_per_trade: float = 0.01
+) -> float:
     dollar_risk = capital * risk_per_trade
-    qty1 = int(dollar_risk / (volatility * price1))
-    qty2 = int(dollar_risk / (volatility * price2))
-    return qty1, qty2
+    units = dollar_risk / spread_volatility
+    return units
 
-def set_stop_loss_take_profit(entry_spread: float, volatility: float, stop_mult: float = 2.0, tp_mult: float = 2.0) -> Tuple[float, float]:
-    stop_loss = entry_spread - stop_mult * volatility
-    take_profit = entry_spread + tp_mult * volatility
+def set_stop_loss_take_profit(
+    entry_z: float,
+    stop_z: float = 3.0,
+    tp_z: float = 0.0
+) -> Tuple[float, float]:
+    if entry_z > 0:  
+        stop_loss = stop_z
+        take_profit = tp_z
+    else:  
+        stop_loss = -stop_z
+        take_profit = tp_z
     return stop_loss, take_profit
 
-def assign_risk_level(volatility: float) -> str:
-    if volatility < 0.5:
-        return 'Low'
-    elif volatility < 1.0:
-        return 'Medium'
+def assign_risk_level(spread_vol: float, q25: float, q75: float) -> str:
+    if spread_vol < q25:
+        return "Low"
+    elif spread_vol < q75:
+        return "Medium"
     else:
-        return 'High'
-
+        return "High"
