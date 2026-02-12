@@ -12,3 +12,20 @@ def set_stop_loss_take_profit(entry_spread: float, volatility: float, stop_mult:
     take_profit = entry_spread + tp_mult * volatility
     return stop_loss, take_profit
 
+def assign_risk_level(volatility: float) -> str:
+    if volatility < 0.5:
+        return 'Low'
+    elif volatility < 1.0:
+        return 'Medium'
+    else:
+        return 'High'
+
+if __name__ == "__main__":
+    capital = 10000
+    price1 = 150
+    price2 = 100
+    volatility = 0.8
+    qty1, qty2 = calculate_position_size(capital, price1, price2, volatility)
+    stop, tp = set_stop_loss_take_profit(0, volatility)
+    risk = assign_risk_level(volatility)
+    print(f"Qty1: {qty1}, Qty2: {qty2}, Stop: {stop:.2f}, TP: {tp:.2f}, Risk: {risk}")
