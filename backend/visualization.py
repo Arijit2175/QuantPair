@@ -28,8 +28,8 @@ def plot_zscore(zscore: pd.Series, signals: pd.DataFrame):
     plt.plot(zscore, label="Z-score")
     plt.axhline(2, color='r', linestyle='--', label="+2")
     plt.axhline(-2, color='g', linestyle='--', label="-2")
-    buy_signals = signals[signals['Signal'] == 1].index
-    sell_signals = signals[signals['Signal'] == -1].index
+    buy_signals = signals[signals['Position'] == 1].index
+    sell_signals = signals[signals['Position'] == -1].index
     plt.scatter(buy_signals, zscore.loc[buy_signals], color='g', marker='^', label='Buy')
     plt.scatter(sell_signals, zscore.loc[sell_signals], color='r', marker='v', label='Sell')
     plt.title("Z-score & Trade Signals")
