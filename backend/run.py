@@ -5,6 +5,7 @@ from spread_signal import compute_spread, compute_rolling_stats, compute_zscore
 from trading_rules import generate_trade_signals
 from risk_management import calculate_position_size, set_stop_loss_take_profit, assign_risk_level
 from backtest import backtest_strategy
+from visualization import plot_prices, plot_spread, plot_zscore, plot_equity_curve
 import yfinance as yf
 import numpy as np
 
@@ -75,6 +76,11 @@ def main():
     print(f"  Win Rate: {results['win_rate']:.2%}")
 
     print("Equity curve and PnL are available in results['equity_curve'] and results['pnl'].")
+
+    plot_prices(pair_data[ticker1], pair_data[ticker2], ticker1, ticker2)
+    plot_spread(spread)
+    plot_zscore(zscore, signals_df)
+    plot_equity_curve(results['equity_curve'])
 
 if __name__ == "__main__":
     main()
