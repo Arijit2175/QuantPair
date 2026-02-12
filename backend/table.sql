@@ -9,3 +9,5 @@ create table strategy_results (
   performance jsonb,
   created_at timestamp with time zone default now()
 );
+
+alter table strategy_results enable row level security;
