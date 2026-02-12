@@ -1,3 +1,6 @@
+import matplotlib.pyplot as plt
+import pandas as pd
+
 def plot_all(price1: pd.Series, price2: pd.Series, ticker1: str, ticker2: str,
              spread: pd.Series, zscore: pd.Series, signals: pd.DataFrame, equity_curve: pd.Series):
     fig, axs = plt.subplots(4, 1, figsize=(12, 16), sharex=True)
@@ -33,8 +36,6 @@ def plot_all(price1: pd.Series, price2: pd.Series, ticker1: str, ticker2: str,
 
     plt.tight_layout()
     plt.show()
-import matplotlib.pyplot as plt
-import pandas as pd
 
 def plot_prices(price1: pd.Series, price2: pd.Series, ticker1: str, ticker2: str):
     plt.figure(figsize=(10, 4))
