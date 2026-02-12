@@ -27,9 +27,3 @@ def generate_trade_signals(zscore: pd.Series, entry_threshold: float = 2.0, exit
             else:
                 signals.append(-1)
     return pd.DataFrame({'Signal': signals}, index=zscore.index)
-
-if __name__ == "__main__":
-    import numpy as np
-    z = pd.Series(np.random.normal(0, 1, 100))
-    signals = generate_trade_signals(z)
-    print(signals.tail())

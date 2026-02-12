@@ -27,11 +27,3 @@ def select_pairs(price_data: pd.DataFrame, corr_threshold: float = 0.8, coint_si
         if cointegration_test(price_data[t1], price_data[t2], coint_significance):
             valid_pairs.append((t1, t2))
     return valid_pairs
-
-if __name__ == "__main__":
-    import yfinance as yf
-    tickers = ["AAPL", "MSFT", "GOOG", "AMZN"]
-    data = yf.download(tickers, start="2020-01-01", end="2023-01-01")['Close']
-    data = data.dropna()
-    pairs = select_pairs(data)
-    print("Valid pairs:", pairs)

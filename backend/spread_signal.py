@@ -12,16 +12,3 @@ def compute_rolling_stats(spread: pd.Series, window: int = 20) -> Tuple[pd.Serie
 
 def compute_zscore(spread: pd.Series, rolling_mean: pd.Series, rolling_std: pd.Series) -> pd.Series:
     return (spread - rolling_mean) / rolling_std
-
-if __name__ == "__main__":
-    import yfinance as yf
-    from hedge_ratio import estimate_hedge_ratio
-    ticker1 = "AAPL"
-    ticker2 = "MSFT"
-    data = yf.download([ticker1, ticker2], start="2020-01-01", end="2023-01-01")['Close']
-    data = data.dropna()
-    beta = estimate_hedge_ratio(data[ticker1], data[ticker2])
-    spread = compute_spread(data[ticker1], data[ticker2], beta)
-    mean, std = compute_rolling_stats(spread)
-    zscore = compute_zscore(spread, mean, std)
-    print(zscore.tail())

@@ -24,20 +24,3 @@ def backtest_strategy(price1: pd.Series, price2: pd.Series, signals: pd.DataFram
         'pnl': pnl
     }
 
-if __name__ == "__main__":
-    import yfinance as yf
-    from hedge_ratio import estimate_hedge_ratio
-    from trading_rules import generate_trade_signals
-    ticker1 = "AAPL"
-    ticker2 = "MSFT"
-    data = yf.download([ticker1, ticker2], start="2020-01-01", end="2023-01-01")['Close']
-    data = data.dropna()
-    beta = estimate_hedge_ratio(data[ticker1], data[ticker2])
-    spread = data[ticker1] - beta * data[ticker2]
-    z = (spread - spread.rolling(20).mean()) / spread.rolling(20).std()
-    signals = generate_trade_signals(z)
-    results = backtest_strategy(data[ticker1], data[ticker2], signals, beta)
-    print(f"Total Return: {results['total_return']:.2%}")
-    print(f"Sharpe Ratio: {results['sharpe_ratio']:.2f}")
-    print(f"Max Drawdown: {results['max_drawdown']:.2%}")
-    print(f"Win Rate: {results['win_rate']:.2%}")

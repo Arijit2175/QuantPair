@@ -14,11 +14,3 @@ def get_aligned_data(ticker1: str, ticker2: str, start: str, end: str) -> pd.Dat
     df = pd.concat([df1, df2], axis=1)
     df = df.dropna()
     return df
-
-if __name__ == "__main__":
-    ticker1 = "AAPL"
-    ticker2 = "MSFT"
-    start = "2020-01-01"
-    end = "2023-01-01"
-    data = get_aligned_data(ticker1, ticker2, start, end)
-    print(data.head())
