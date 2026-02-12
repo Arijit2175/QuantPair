@@ -10,7 +10,7 @@ import yfinance as yf
 import numpy as np
 
 def main():
-    print("--- Pairs Trading Strategy Runner ---")
+    print("--- QuantPair ---")
 
     tickers = input("Enter stock tickers (comma separated, e.g. AAPL,MSFT,GOOG,AMZN): ").replace(' ', '').split(',')
     start_date = input("Enter start date (YYYY-MM-DD): ")
@@ -77,10 +77,16 @@ def main():
 
     print("Equity curve and PnL are available in results['equity_curve'] and results['pnl'].")
 
-    plot_prices(pair_data[ticker1], pair_data[ticker2], ticker1, ticker2)
-    plot_spread(spread)
-    plot_zscore(zscore, signals_df)
-    plot_equity_curve(results['equity_curve'])
+    plot_all(
+        pair_data[ticker1],
+        pair_data[ticker2],
+        ticker1,
+        ticker2,
+        spread,
+        zscore,
+        signals_df,
+        results['equity_curve']
+    )
 
 if __name__ == "__main__":
     main()
