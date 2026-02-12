@@ -5,7 +5,7 @@ from spread_signal import compute_spread, compute_rolling_stats, compute_zscore
 from trading_rules import generate_trade_signals
 from risk_management import calculate_position_size, set_stop_loss_take_profit, assign_risk_level
 from backtest import backtest_strategy
-from visualization import plot_prices, plot_spread, plot_zscore, plot_equity_curve
+from visualization import plot_prices, plot_spread, plot_zscore, plot_equity_curve, plot_all
 import yfinance as yf
 import numpy as np
 
