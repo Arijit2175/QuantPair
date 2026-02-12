@@ -8,3 +8,9 @@ def download_stock_data(ticker: str, start: str, end: str) -> pd.DataFrame:
     df.index = pd.to_datetime(df.index)
     return df
 
+def get_aligned_data(ticker1: str, ticker2: str, start: str, end: str) -> pd.DataFrame:
+    df1 = download_stock_data(ticker1, start, end)
+    df2 = download_stock_data(ticker2, start, end)
+    df = pd.concat([df1, df2], axis=1)
+    df = df.dropna()
+    return df
