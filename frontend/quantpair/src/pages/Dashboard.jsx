@@ -65,10 +65,10 @@ export default function Dashboard() {
 
   // Modern dashboard design
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cyan-900 via-slate-900 to-slate-800 text-white flex">
+    <div className="min-h-screen bg-gradient-to-br from-cyan-900 via-slate-900 to-slate-800 text-white flex items-center justify-center">
 
       {/* Sidebar */}
-      <aside className="w-64 bg-gradient-to-b from-cyan-800/80 to-slate-900/80 backdrop-blur-lg border-r border-slate-700 p-8 hidden md:flex flex-col items-center">
+      <aside className="w-64 bg-gradient-to-b from-cyan-800/80 to-slate-900/80 backdrop-blur-lg border-r border-slate-700 p-8 hidden md:flex flex-col items-center justify-center min-h-screen">
         <h2 className="text-3xl font-extrabold mb-10 text-cyan-300 drop-shadow-lg">QuantPair</h2>
         <nav className="w-full">
           <ul className="space-y-6 text-lg">
@@ -81,10 +81,10 @@ export default function Dashboard() {
       </aside>
 
       {/* Main */}
-      <div className="flex-1 flex flex-col min-h-screen items-center">
+      <div className="flex-1 flex flex-col min-h-screen items-center justify-center">
 
         {/* Header */}
-        <header className="bg-gradient-to-r from-cyan-900/80 to-slate-900/80 backdrop-blur border-b border-slate-700 p-8 flex flex-col md:flex-row md:justify-between md:items-center shadow-lg gap-6">
+        <header className="bg-gradient-to-r from-cyan-900/80 to-slate-900/80 backdrop-blur border-b border-slate-700 p-8 flex flex-col md:flex-row md:justify-between md:items-center shadow-lg gap-6 w-full max-w-5xl mx-auto">
           <h1 className="text-3xl font-extrabold tracking-tight text-cyan-300 drop-shadow">QuantPair Dashboard</h1>
           <form className="flex flex-wrap gap-4 items-end" onSubmit={handleRunStrategy}>
             <div>
@@ -108,11 +108,11 @@ export default function Dashboard() {
         </header>
 
         {/* Content */}
-        <main className="p-10 space-y-10 bg-gradient-to-br from-slate-900/60 to-cyan-900/40 flex-1 w-full max-w-5xl mx-auto flex flex-col items-center">
+        <main className="p-10 space-y-10 bg-gradient-to-br from-slate-900/60 to-cyan-900/40 flex-1 w-full max-w-5xl mx-auto flex flex-col items-center justify-center">
 
           {/* Strategy Summary */}
           {summary.pair && (
-            <div className="mb-8 bg-white/10 rounded-xl p-6 flex flex-wrap gap-8 items-center shadow-lg">
+            <div className="mb-8 bg-white/10 rounded-xl p-6 flex flex-wrap gap-8 items-center justify-center shadow-lg">
               <div>
                 <span className="text-cyan-300 font-bold">Pair:</span> <span className="text-white font-mono">{summary.pair}</span>
               </div>
@@ -133,10 +133,10 @@ export default function Dashboard() {
 
           {/* Strategy Recommendation */}
           {recommendation && (
-            <div className="mb-8 bg-cyan-900/40 rounded-xl p-6 flex flex-wrap gap-8 items-center shadow-lg border border-cyan-700">
+            <div className="mb-8 bg-cyan-900/40 rounded-xl p-6 flex flex-wrap gap-8 items-center justify-center shadow-lg border border-cyan-700">
               <h3 className="text-xl font-bold text-cyan-200 w-full mb-2">Strategy Recommendation</h3>
               {Object.entries(recommendation).map(([ticker, rec]) => (
-                <div key={ticker} className="flex flex-col">
+                <div key={ticker} className="flex flex-col items-center">
                   <span className="text-cyan-300 font-bold">{ticker}:</span>
                   <span className="text-white font-mono">{rec.action} {rec.action !== 'Hold' ? rec.quantity : ''}</span>
                 </div>
@@ -145,7 +145,7 @@ export default function Dashboard() {
           )}
 
           {/* KPI Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 w-full items-center justify-center">
             <Card title="Total Return" value={performance.total_return !== undefined ? `${(performance.total_return * 100).toFixed(2)}%` : "-"} />
             <Card title="Sharpe Ratio" value={performance.sharpe_ratio !== undefined ? performance.sharpe_ratio.toFixed(2) : "-"} />
             <Card title="Max Drawdown" value={performance.max_drawdown !== undefined ? `${(performance.max_drawdown * 100).toFixed(2)}%` : "-"} />
@@ -154,7 +154,7 @@ export default function Dashboard() {
 
 
           {/* Charts */}
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 w-full">
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 w-full flex flex-col items-center justify-center">
             <h2 className="text-2xl font-bold mb-6 text-cyan-200">Strategy Visualization</h2>
             {error && <div className="text-red-400 mb-4">{error}</div>}
             {priceSeries.length > 0 && summary.pair && (
