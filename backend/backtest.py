@@ -24,7 +24,9 @@ def backtest_strategy(
     equity_curve = initial_capital + pnl.cumsum()
 
     daily_returns = equity_curve.pct_change(fill_method=None).fillna(0)
-    std_val = np.std(daily_returns)
+    if isinstance(daily_returns, pd.DataFrame):
+        daily_returns = daily_returns.squeeze()
+    std_val = float(np.std(daily_returns))
     sharpe = np.mean(daily_returns) / std_val * np.sqrt(252) if std_val > 0 else 0
     max_drawdown = ((equity_curve.cummax() - equity_curve) / equity_curve.cummax()).max()
     total_return = (equity_curve.iloc[-1] - initial_capital) / initial_capital
