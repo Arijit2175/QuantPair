@@ -38,6 +38,14 @@ def run_strategy(req: StrategyRequest):
     stop, tp = set_stop_loss_take_profit(spread.iloc[-1], volatility)
     risk = assign_risk_level(volatility)
     results = backtest_strategy(pair_data[ticker1], pair_data[ticker2], signals_df, beta, req.initial_capital)
+    equity_curve = [
+        {"date": str(idx), "value": float(val)}
+        for idx, val in results["equity_curve"].items()
+    ]
+    pnl = [
+        {"date": str(idx), "value": float(val)}
+        for idx, val in results["pnl"].items()
+    ]
     return {
         "valid_pairs": pairs,
         "selected_pair": [ticker1, ticker2],
@@ -51,7 +59,9 @@ def run_strategy(req: StrategyRequest):
             "sharpe_ratio": results['sharpe_ratio'],
             "max_drawdown": results['max_drawdown'],
             "win_rate": results['win_rate']
-        }
+        },
+        "equity_curve": equity_curve,
+        "pnl": pnl
     }
 
 @app.get("/")

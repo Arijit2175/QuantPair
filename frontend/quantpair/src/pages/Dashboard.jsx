@@ -8,6 +8,7 @@ import { fetchStrategyResults } from "../api/strategy";
 export default function Dashboard() {
   const [equityCurve, setEquityCurve] = useState([]);
   const [pnl, setPnl] = useState([]);
+  const [performance, setPerformance] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -18,6 +19,7 @@ export default function Dashboard() {
       const data = await fetchStrategyResults();
       setEquityCurve(data.equity_curve || []);
       setPnl(data.pnl || []);
+      setPerformance(data.performance || {});
     } catch (err) {
       setError("Failed to fetch strategy results");
     } finally {
@@ -56,10 +58,10 @@ export default function Dashboard() {
 
           {/* KPI Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <Card title="Total Return" value="+12.4%" />
-            <Card title="Sharpe Ratio" value="1.32" />
-            <Card title="Max Drawdown" value="8.5%" />
-            <Card title="Win Rate" value="53%" />
+            <Card title="Total Return" value={performance.total_return !== undefined ? `${(performance.total_return * 100).toFixed(2)}%` : "-"} />
+            <Card title="Sharpe Ratio" value={performance.sharpe_ratio !== undefined ? performance.sharpe_ratio.toFixed(2) : "-"} />
+            <Card title="Max Drawdown" value={performance.max_drawdown !== undefined ? `${(performance.max_drawdown * 100).toFixed(2)}%` : "-"} />
+            <Card title="Win Rate" value={performance.win_rate !== undefined ? `${(performance.win_rate * 100).toFixed(0)}%` : "-"} />
           </div>
 
 
