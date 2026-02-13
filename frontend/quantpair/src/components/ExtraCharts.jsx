@@ -40,22 +40,32 @@ export function SpreadWithMeanChart({ data }) {
 }
 
 export function ZScoreSignalsChart({ data }) {
+  // Prepare bar color for each signal
+  const barData = data.map(d => ({
+    ...d,
+    barColor:
+      d.signal === 1 ? '#22c55e' : // Buy - green
+      d.signal === -1 ? '#ef4444' : // Sell - red
+      '#64748b' // Neutral - gray
+  }));
   return (
     <div className="bg-white shadow rounded-xl p-6 mb-8">
       <h2 className="text-lg font-semibold mb-4 text-gray-800">Z-score & Trade Signals</h2>
       <ResponsiveContainer width="100%" height={220}>
-        <LineChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+        <BarChart data={barData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" tick={{ fill: '#64748b' }} />
           <YAxis tick={{ fill: '#64748b' }} />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="zscore" stroke="#2563eb" strokeWidth={2} dot={false} name="Z-score" />
           <ReferenceLine y={2} stroke="#ef4444" strokeDasharray="3 3" label={"+2"} />
           <ReferenceLine y={-2} stroke="#22c55e" strokeDasharray="3 3" label={"-2"} />
-          <Scatter data={data.filter(d => d.signal === 1)} fill="#22c55e" shape="triangle" name="Buy" />
-          <Scatter data={data.filter(d => d.signal === -1)} fill="#ef4444" shape="triangle-down" name="Sell" />
-        </LineChart>
+          <Bar dataKey="zscore" name="Z-score" isAnimationActive={false}>
+            {barData.map((entry, idx) => (
+              <Cell key={`cell-${idx}`} fill={entry.barColor} />
+            ))}
+          </Bar>
+        </BarChart>
       </ResponsiveContainer>
     </div>
   );
