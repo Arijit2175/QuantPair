@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from "react";
-import Card from "../components/Card";        
-import Button from "../components/Button"; 
+import Card from "../components/Card";
+import Button from "../components/Button";
 import { EquityCurveChart, PnLChart } from "../components/Charts";
 import { fetchStrategyResults } from "../api/strategy";
 
@@ -24,41 +25,37 @@ export default function Dashboard() {
     }
   };
 
-  useEffect(() => {
-    // Optionally fetch on mount
-    // handleRunStrategy();
-  }, []);
-
+  // Modern dashboard design
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white flex">
+    <div className="min-h-screen bg-gradient-to-br from-cyan-900 via-slate-900 to-slate-800 text-white flex">
 
       {/* Sidebar */}
-      <aside className="w-64 bg-slate-900/80 backdrop-blur-lg border-r border-slate-700 p-6 hidden md:block">
-        <h2 className="text-2xl font-bold mb-8 text-cyan-400">QuantPair</h2>
-        <nav>
-          <ul className="space-y-4">
-            <li className="hover:text-cyan-400 cursor-pointer">📊 Overview</li>
-            <li className="hover:text-cyan-400 cursor-pointer">⚙ Run Strategy</li>
-            <li className="hover:text-cyan-400 cursor-pointer">📈 Results</li>
-            <li className="hover:text-cyan-400 cursor-pointer">🛠 Settings</li>
+      <aside className="w-64 bg-gradient-to-b from-cyan-800/80 to-slate-900/80 backdrop-blur-lg border-r border-slate-700 p-8 hidden md:flex flex-col items-center">
+        <h2 className="text-3xl font-extrabold mb-10 text-cyan-300 drop-shadow-lg">QuantPair</h2>
+        <nav className="w-full">
+          <ul className="space-y-6 text-lg">
+            <li className="hover:text-cyan-400 cursor-pointer transition-colors">📊 Overview</li>
+            <li className="hover:text-cyan-400 cursor-pointer transition-colors">⚙ Run Strategy</li>
+            <li className="hover:text-cyan-400 cursor-pointer transition-colors">📈 Results</li>
+            <li className="hover:text-cyan-400 cursor-pointer transition-colors">🛠 Settings</li>
           </ul>
         </nav>
       </aside>
 
       {/* Main */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-h-screen">
 
         {/* Header */}
-        <header className="bg-slate-900/60 backdrop-blur border-b border-slate-700 p-5 flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Pairs Trading Dashboard</h1>
+        <header className="bg-gradient-to-r from-cyan-900/80 to-slate-900/80 backdrop-blur border-b border-slate-700 p-8 flex justify-between items-center shadow-lg">
+          <h1 className="text-3xl font-extrabold tracking-tight text-cyan-300 drop-shadow">Pairs Trading Dashboard</h1>
           <Button text={loading ? "Running..." : "Run Strategy"} onClick={handleRunStrategy} />
         </header>
 
         {/* Content */}
-        <main className="p-8 space-y-8">
+        <main className="p-10 space-y-10 bg-gradient-to-br from-slate-900/60 to-cyan-900/40 flex-1">
 
           {/* KPI Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <Card title="Total Return" value="+12.4%" />
             <Card title="Sharpe Ratio" value="1.32" />
             <Card title="Max Drawdown" value="8.5%" />
@@ -67,8 +64,8 @@ export default function Dashboard() {
 
 
           {/* Charts */}
-          <div className="bg-slate-900/60 backdrop-blur-lg rounded-xl shadow-xl p-6">
-            <h2 className="text-xl font-semibold mb-4">Strategy Visualization</h2>
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8">
+            <h2 className="text-2xl font-bold mb-6 text-cyan-200">Strategy Visualization</h2>
             {error && <div className="text-red-400 mb-4">{error}</div>}
             <EquityCurveChart data={equityCurve} />
             <PnLChart data={pnl} />
