@@ -44,7 +44,7 @@ def run_strategy(req: StrategyRequest):
     volatility = std.iloc[-1]
     price1 = pair_data[ticker1].iloc[-1]
     price2 = pair_data[ticker2].iloc[-1]
-    qty1, qty2 = calculate_position_size(req.initial_capital, price1, price2, volatility)
+    qty = calculate_position_size(req.initial_capital, volatility)
     stop, tp = set_stop_loss_take_profit(spread.iloc[-1], volatility)
     risk = assign_risk_level(volatility)
     results = backtest_strategy(pair_data[ticker1], pair_data[ticker2], signals_df, beta, req.initial_capital)
@@ -60,7 +60,7 @@ def run_strategy(req: StrategyRequest):
         "valid_pairs": pairs,
         "selected_pair": [ticker1, ticker2],
         "hedge_ratio": beta,
-        "position_size": {ticker1: qty1, ticker2: qty2},
+        "position_size": {ticker1: qty, ticker2: qty},
         "stop_loss": stop,
         "take_profit": tp,
         "risk_level": risk,
