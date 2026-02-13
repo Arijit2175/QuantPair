@@ -1,7 +1,7 @@
-from fastapi import FastAPI, Query
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List
 import pandas as pd
 import yfinance as yf
 from pair_selection import select_pairs
@@ -11,12 +11,11 @@ from trading_rules import generate_trade_signals
 from risk_management import calculate_position_size, set_stop_loss_take_profit, assign_risk_level
 from backtest import backtest_strategy
 
-
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -49,7 +48,14 @@ def run_strategy(req: StrategyRequest):
     q25 = std.quantile(0.25)
     q75 = std.quantile(0.75)
     risk = assign_risk_level(volatility, q25, q75)
-    results = backtest_strategy(pair_data[ticker1], pair_data[ticker2], signals_df, beta, req.initial_capital)
+
+    if isinstance(signals_df, pd.DataFrame):
+        positions = signals_df["Position"]
+    else:
+        positions = signals_df
+
+    results = backtest_strategy(pair_data[ticker1], pair_data[ticker2], positions, beta, req.initial_capital)
+
     equity_curve = [
         {"date": str(idx), "value": float(val)}
         for idx, val in results["equity_curve"].items()
