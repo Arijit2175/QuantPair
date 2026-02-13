@@ -64,7 +64,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950/5 to-slate-900 text-white flex items-center justify-center overflow-hidden">
+    <div className="min-h-screen bg-background text-foreground flex items-center justify-center overflow-hidden">
       {/* Grid background pattern */}
       <div className="fixed inset-0 opacity-[0.03] pointer-events-none">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -82,7 +82,7 @@ export default function Dashboard() {
       <div className="fixed bottom-0 left-0 w-80 h-80 bg-blue-500/5 blur-3xl rounded-full opacity-15 pointer-events-none animate-pulse"></div>
 
       {/* Sidebar */}
-      <aside className="fixed left-0 top-0 w-64 bg-gradient-to-b from-slate-950 to-slate-900/80 backdrop-blur-xl border-r border-cyan-500/10 p-8 hidden md:flex flex-col min-h-screen z-50 shadow-2xl">
+      <aside className="fixed left-0 top-0 w-64 bg-sidebar-background text-sidebar-foreground border-r border-sidebar-border p-8 hidden md:flex flex-col min-h-screen z-50 shadow-2xl">
         <div className="mb-12">
           <div className="flex items-center gap-2 text-cyan-400 mb-2">
             <div className="w-1 h-6 bg-gradient-to-b from-cyan-400 to-cyan-600"></div>
@@ -103,27 +103,27 @@ export default function Dashboard() {
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col ml-0 md:ml-64 min-h-screen">
+      <div className="flex-1 flex flex-col ml-0 md:ml-64 min-h-screen bg-background text-foreground">
         {/* Header */}
-        <header className="bg-gradient-to-r from-slate-900/40 to-slate-950/60 backdrop-blur-xl border-b border-cyan-500/10 p-6 md:p-8 sticky top-0 z-40 shadow-lg">
+        <header className="bg-popover border-b border-border p-6 md:p-8 sticky top-0 z-40 shadow-lg">
           <div className="max-w-7xl mx-auto">
             <h1 className="text-2xl md:text-3xl font-bold text-white mb-6 animate-slide-in-left">Strategy Runner</h1>
             <form className="grid grid-cols-1 md:grid-cols-5 gap-4 items-end" onSubmit={handleRunStrategy}>
               <div className="animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
                 <label className="block text-xs font-mono text-cyan-400 uppercase tracking-widest mb-2">Tickers</label>
-                <input type="text" className="w-full bg-slate-800/60 border border-cyan-500/20 rounded-lg px-3 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/40 transition-all" value={tickers} onChange={e => setTickers(e.target.value)} placeholder="MSFT,AAPL" required />
+                <input type="text" className="w-full bg-input border border-border rounded-lg px-3 py-2.5 text-foreground placeholder-muted-foreground focus:outline-none focus:border-ring transition-all" value={tickers} onChange={e => setTickers(e.target.value)} placeholder="MSFT,AAPL" required />
               </div>
               <div className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
                 <label className="block text-xs font-mono text-cyan-400 uppercase tracking-widest mb-2">Start Date</label>
-                <input type="date" className="w-full bg-slate-800/60 border border-cyan-500/20 rounded-lg px-3 py-2.5 text-white focus:outline-none focus:border-cyan-500/40 transition-all" value={startDate} onChange={e => setStartDate(e.target.value)} required />
+                <input type="date" className="w-full bg-input border border-border rounded-lg px-3 py-2.5 text-foreground focus:outline-none focus:border-ring transition-all" value={startDate} onChange={e => setStartDate(e.target.value)} required />
               </div>
               <div className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
                 <label className="block text-xs font-mono text-cyan-400 uppercase tracking-widest mb-2">End Date</label>
-                <input type="date" className="w-full bg-slate-800/60 border border-cyan-500/20 rounded-lg px-3 py-2.5 text-white focus:outline-none focus:border-cyan-500/40 transition-all" value={endDate} onChange={e => setEndDate(e.target.value)} required />
+                <input type="date" className="w-full bg-input border border-border rounded-lg px-3 py-2.5 text-foreground focus:outline-none focus:border-ring transition-all" value={endDate} onChange={e => setEndDate(e.target.value)} required />
               </div>
               <div className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
                 <label className="block text-xs font-mono text-cyan-400 uppercase tracking-widest mb-2">Capital</label>
-                <input type="number" className="w-full bg-slate-800/60 border border-cyan-500/20 rounded-lg px-3 py-2.5 text-white focus:outline-none focus:border-cyan-500/40 transition-all" value={initialCapital} onChange={e => setInitialCapital(e.target.value)} min={1} required />
+                <input type="number" className="w-full bg-input border border-border rounded-lg px-3 py-2.5 text-foreground focus:outline-none focus:border-ring transition-all" value={initialCapital} onChange={e => setInitialCapital(e.target.value)} min={1} required />
               </div>
               <div className="animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
                 <Button text={loading ? "Running..." : "Execute"} buttonType="submit" />
@@ -138,7 +138,7 @@ export default function Dashboard() {
 
             {/* Strategy Summary */}
             {summary.pair && (
-              <div className="animate-fade-in-up bg-gradient-to-r from-slate-800/30 to-slate-900/50 backdrop-blur-sm rounded-xl p-6 border border-cyan-500/20 hover:border-cyan-500/40 transition-all">
+              <div className="animate-fade-in-up bg-card text-card-foreground rounded-xl p-6 border border-border hover:border-ring transition-all">
                 <h3 className="text-xs font-mono text-cyan-400 uppercase tracking-widest mb-4 font-semibold">Strategy Summary</h3>
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                   <div>
@@ -167,7 +167,7 @@ export default function Dashboard() {
 
             {/* Strategy Recommendation */}
             {recommendation && (
-              <div className="animate-fade-in-up bg-gradient-to-r from-emerald-900/20 to-slate-900/50 backdrop-blur-sm rounded-xl p-6 border border-emerald-500/30 hover:border-emerald-500/50 transition-all">
+              <div className="animate-fade-in-up bg-accent text-accent-foreground rounded-xl p-6 border border-border hover:border-ring transition-all">
                 <h3 className="text-xs font-mono text-emerald-400 uppercase tracking-widest mb-4 font-semibold">Trade Recommendations</h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {Object.entries(recommendation).map(([ticker, rec]) => (
@@ -191,7 +191,7 @@ export default function Dashboard() {
             </div>
 
             {/* Charts Section */}
-            <div className="bg-gradient-to-br from-slate-800/20 to-slate-900/40 backdrop-blur-sm rounded-2xl border border-cyan-500/10 p-8 animate-fade-in-up">
+            <div className="bg-popover text-popover-foreground rounded-2xl border border-border p-8 animate-fade-in-up">
               <h2 className="text-sm font-mono text-cyan-400 uppercase tracking-widest mb-8 font-semibold">Performance Visualization</h2>
               {error && <div className="text-red-400 text-sm mb-6 p-4 bg-red-950/20 rounded-lg border border-red-500/20">{error}</div>}
               <div className="space-y-6">
