@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Query
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
 import pandas as pd
@@ -10,7 +11,16 @@ from trading_rules import generate_trade_signals
 from risk_management import calculate_position_size, set_stop_loss_take_profit, assign_risk_level
 from backtest import backtest_strategy
 
+
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class StrategyRequest(BaseModel):
     tickers: List[str]
