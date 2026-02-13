@@ -1,4 +1,4 @@
-export default function Button({ text, onClick, type = "primary" }) {
+export default function Button({ text, onClick, type = "primary", ...props }) {
   const base =
     "px-5 py-2 rounded-lg font-semibold transition-all duration-200";
 
@@ -9,7 +9,7 @@ export default function Button({ text, onClick, type = "primary" }) {
   };
 
   return (
-    <button className={`${base} ${styles[type]}`} onClick={onClick}>
+    <button className={`${base} ${styles[type]}`} onClick={onClick} type={props.type || "button"} {...props}>
       {text}
     </button>
   );

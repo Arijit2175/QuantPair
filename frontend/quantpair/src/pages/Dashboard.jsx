@@ -29,8 +29,13 @@ export default function Dashboard() {
       setEquityCurve(data.equity_curve || []);
       setPnl(data.pnl || []);
       setPerformance(data.performance || {});
+      if (data.error) setError(data.error);
     } catch (err) {
-      setError("Failed to fetch strategy results");
+      // Show more detailed error for debugging
+      setError(err.message || "Failed to fetch strategy results");
+      // Optionally log error to console for developer
+      // eslint-disable-next-line no-console
+      console.error("Strategy fetch error:", err);
     } finally {
       setLoading(false);
     }
