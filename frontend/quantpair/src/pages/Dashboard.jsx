@@ -81,11 +81,11 @@ export default function Dashboard() {
       </aside>
 
       {/* Main */}
-      <div className="flex-1 flex flex-col min-h-screen">
+      <div className="flex-1 flex flex-col min-h-screen items-center">
 
         {/* Header */}
         <header className="bg-gradient-to-r from-cyan-900/80 to-slate-900/80 backdrop-blur border-b border-slate-700 p-8 flex flex-col md:flex-row md:justify-between md:items-center shadow-lg gap-6">
-          <h1 className="text-3xl font-extrabold tracking-tight text-cyan-300 drop-shadow">Pairs Trading Dashboard</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight text-cyan-300 drop-shadow">QuantPair Dashboard</h1>
           <form className="flex flex-wrap gap-4 items-end" onSubmit={handleRunStrategy}>
             <div>
               <label className="block text-xs mb-1 text-cyan-200">Tickers (comma separated)</label>
@@ -108,7 +108,7 @@ export default function Dashboard() {
         </header>
 
         {/* Content */}
-        <main className="p-10 space-y-10 bg-gradient-to-br from-slate-900/60 to-cyan-900/40 flex-1">
+        <main className="p-10 space-y-10 bg-gradient-to-br from-slate-900/60 to-cyan-900/40 flex-1 w-full max-w-5xl mx-auto flex flex-col items-center">
 
           {/* Strategy Summary */}
           {summary.pair && (
@@ -145,7 +145,7 @@ export default function Dashboard() {
           )}
 
           {/* KPI Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 w-full">
             <Card title="Total Return" value={performance.total_return !== undefined ? `${(performance.total_return * 100).toFixed(2)}%` : "-"} />
             <Card title="Sharpe Ratio" value={performance.sharpe_ratio !== undefined ? performance.sharpe_ratio.toFixed(2) : "-"} />
             <Card title="Max Drawdown" value={performance.max_drawdown !== undefined ? `${(performance.max_drawdown * 100).toFixed(2)}%` : "-"} />
@@ -154,7 +154,7 @@ export default function Dashboard() {
 
 
           {/* Charts */}
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8">
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 w-full">
             <h2 className="text-2xl font-bold mb-6 text-cyan-200">Strategy Visualization</h2>
             {error && <div className="text-red-400 mb-4">{error}</div>}
             {priceSeries.length > 0 && summary.pair && (
