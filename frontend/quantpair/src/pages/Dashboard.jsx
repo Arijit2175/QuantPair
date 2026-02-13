@@ -4,7 +4,7 @@ import Card from "../components/Card";
 import Button from "../components/Button";
 import { EquityCurveChart, PnLChart } from "../components/Charts";
 import { fetchStrategyResults } from "../api/strategy";
-
+export default function Dashboard() {
   const [equityCurve, setEquityCurve] = useState([]);
   const [pnl, setPnl] = useState([]);
   const [performance, setPerformance] = useState({});
@@ -104,4 +104,4 @@ import { fetchStrategyResults } from "../api/strategy";
       </div>
     </div>
   );
-
+}
