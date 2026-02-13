@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+import numpy as np
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
