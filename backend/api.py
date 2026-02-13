@@ -55,46 +55,46 @@ def run_strategy(req: StrategyRequest):
     else:
         positions = signals_df
 
-        results = backtest_strategy(pair_data[ticker1], pair_data[ticker2], positions, beta, req.initial_capital)
+    results = backtest_strategy(pair_data[ticker1], pair_data[ticker2], positions, beta, req.initial_capital)
 
-        results["equity_curve"] = results["equity_curve"].replace([np.inf, -np.inf], np.nan).fillna(0)
-        results["pnl"] = results["pnl"].replace([np.inf, -np.inf], np.nan).fillna(0)
+    results["equity_curve"] = results["equity_curve"].replace([np.inf, -np.inf], np.nan).fillna(0)
+    results["pnl"] = results["pnl"].replace([np.inf, -np.inf], np.nan).fillna(0)
 
-        def safe_float(val):
-            try:
-                if pd.isna(val) or np.isinf(val):
-                    return 0.0
-                return float(val)
-            except Exception:
+    def safe_float(val):
+        try:
+            if pd.isna(val) or np.isinf(val):
                 return 0.0
+            return float(val)
+        except Exception:
+            return 0.0
 
-        performance = {
-            "total_return": safe_float(results['total_return']),
-            "sharpe_ratio": safe_float(results['sharpe_ratio']),
-            "max_drawdown": safe_float(results['max_drawdown']),
-            "win_rate": safe_float(results['win_rate'])
-        }
+    performance = {
+        "total_return": safe_float(results['total_return']),
+        "sharpe_ratio": safe_float(results['sharpe_ratio']),
+        "max_drawdown": safe_float(results['max_drawdown']),
+        "win_rate": safe_float(results['win_rate'])
+    }
 
-        equity_curve = [
-            {"date": str(idx), "value": float(val)}
-            for idx, val in results["equity_curve"].items()
-        ]
-        pnl = [
-            {"date": str(idx), "value": float(val)}
-            for idx, val in results["pnl"].items()
-        ]
-        return {
-            "valid_pairs": pairs,
-            "selected_pair": [ticker1, ticker2],
-            "hedge_ratio": beta,
-            "position_size": {ticker1: qty, ticker2: qty},
-            "stop_loss": stop,
-            "take_profit": tp,
-            "risk_level": risk,
-            "performance": performance,
-            "equity_curve": equity_curve,
-            "pnl": pnl
-        }
+    equity_curve = [
+        {"date": str(idx), "value": float(val)}
+        for idx, val in results["equity_curve"].items()
+    ]
+    pnl = [
+        {"date": str(idx), "value": float(val)}
+        for idx, val in results["pnl"].items()
+    ]
+    return {
+        "valid_pairs": pairs,
+        "selected_pair": [ticker1, ticker2],
+        "hedge_ratio": beta,
+        "position_size": {ticker1: qty, ticker2: qty},
+        "stop_loss": stop,
+        "take_profit": tp,
+        "risk_level": risk,
+        "performance": performance,
+        "equity_curve": equity_curve,
+        "pnl": pnl
+    }
 
 @app.get("/")
 def root():
