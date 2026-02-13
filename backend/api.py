@@ -46,7 +46,9 @@ def run_strategy(req: StrategyRequest):
     price2 = pair_data[ticker2].iloc[-1]
     qty = calculate_position_size(req.initial_capital, volatility)
     stop, tp = set_stop_loss_take_profit(spread.iloc[-1], volatility)
-    risk = assign_risk_level(volatility)
+    q25 = std.quantile(0.25)
+    q75 = std.quantile(0.75)
+    risk = assign_risk_level(volatility, q25, q75)
     results = backtest_strategy(pair_data[ticker1], pair_data[ticker2], signals_df, beta, req.initial_capital)
     equity_curve = [
         {"date": str(idx), "value": float(val)}
