@@ -5,18 +5,27 @@ import Button from "../components/Button";
 import { EquityCurveChart, PnLChart } from "../components/Charts";
 import { fetchStrategyResults } from "../api/strategy";
 
-export default function Dashboard() {
   const [equityCurve, setEquityCurve] = useState([]);
   const [pnl, setPnl] = useState([]);
   const [performance, setPerformance] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [tickers, setTickers] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [initialCapital, setInitialCapital] = useState(10000);
 
-  const handleRunStrategy = async () => {
+  const handleRunStrategy = async (e) => {
+    if (e) e.preventDefault();
     setLoading(true);
     setError(null);
     try {
-      const data = await fetchStrategyResults();
+      const data = await fetchStrategyResults({
+        tickers: tickers.split(",").map(t => t.trim()).filter(Boolean),
+        start_date: startDate,
+        end_date: endDate,
+        initial_capital: initialCapital
+      });
       setEquityCurve(data.equity_curve || []);
       setPnl(data.pnl || []);
       setPerformance(data.performance || {});
@@ -48,9 +57,27 @@ export default function Dashboard() {
       <div className="flex-1 flex flex-col min-h-screen">
 
         {/* Header */}
-        <header className="bg-gradient-to-r from-cyan-900/80 to-slate-900/80 backdrop-blur border-b border-slate-700 p-8 flex justify-between items-center shadow-lg">
+        <header className="bg-gradient-to-r from-cyan-900/80 to-slate-900/80 backdrop-blur border-b border-slate-700 p-8 flex flex-col md:flex-row md:justify-between md:items-center shadow-lg gap-6">
           <h1 className="text-3xl font-extrabold tracking-tight text-cyan-300 drop-shadow">Pairs Trading Dashboard</h1>
-          <Button text={loading ? "Running..." : "Run Strategy"} onClick={handleRunStrategy} />
+          <form className="flex flex-wrap gap-4 items-end" onSubmit={handleRunStrategy}>
+            <div>
+              <label className="block text-xs mb-1 text-cyan-200">Tickers (comma separated)</label>
+              <input type="text" className="rounded px-2 py-1 text-slate-900" value={tickers} onChange={e => setTickers(e.target.value)} placeholder="e.g. MSFT,AAPL" required />
+            </div>
+            <div>
+              <label className="block text-xs mb-1 text-cyan-200">Start Date</label>
+              <input type="date" className="rounded px-2 py-1 text-slate-900" value={startDate} onChange={e => setStartDate(e.target.value)} required />
+            </div>
+            <div>
+              <label className="block text-xs mb-1 text-cyan-200">End Date</label>
+              <input type="date" className="rounded px-2 py-1 text-slate-900" value={endDate} onChange={e => setEndDate(e.target.value)} required />
+            </div>
+            <div>
+              <label className="block text-xs mb-1 text-cyan-200">Initial Capital</label>
+              <input type="number" className="rounded px-2 py-1 text-slate-900" value={initialCapital} onChange={e => setInitialCapital(e.target.value)} min={1} required />
+            </div>
+            <Button text={loading ? "Running..." : "Run Strategy"} type="submit" />
+          </form>
         </header>
 
         {/* Content */}
@@ -77,4 +104,4 @@ export default function Dashboard() {
       </div>
     </div>
   );
-}
+
