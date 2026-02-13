@@ -26,14 +26,19 @@ export default function Dashboard() {
         end_date: endDate,
         initial_capital: initialCapital
       });
+      if (!data || typeof data !== "object") {
+        setError("No data returned from backend");
+        setEquityCurve([]);
+        setPnl([]);
+        setPerformance({});
+        return;
+      }
       setEquityCurve(data.equity_curve || []);
       setPnl(data.pnl || []);
       setPerformance(data.performance || {});
       if (data.error) setError(data.error);
     } catch (err) {
-      // Show more detailed error for debugging
       setError(err.message || "Failed to fetch strategy results");
-      // Optionally log error to console for developer
       // eslint-disable-next-line no-console
       console.error("Strategy fetch error:", err);
     } finally {
@@ -81,7 +86,7 @@ export default function Dashboard() {
               <label className="block text-xs mb-1 text-cyan-200">Initial Capital</label>
               <input type="number" className="rounded px-2 py-1 text-slate-900" value={initialCapital} onChange={e => setInitialCapital(e.target.value)} min={1} required />
             </div>
-            <Button text={loading ? "Running..." : "Run Strategy"} type="submit" />
+            <Button text={loading ? "Running..." : "Run Strategy"} buttonType="submit" />
           </form>
         </header>
 
