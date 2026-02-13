@@ -14,6 +14,7 @@ export default function Dashboard() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [initialCapital, setInitialCapital] = useState(10000);
+  const [summary, setSummary] = useState({});
 
   const handleRunStrategy = async (e) => {
     if (e) e.preventDefault();
@@ -31,11 +32,19 @@ export default function Dashboard() {
         setEquityCurve([]);
         setPnl([]);
         setPerformance({});
+        setSummary({});
         return;
       }
       setEquityCurve(data.equity_curve || []);
       setPnl(data.pnl || []);
       setPerformance(data.performance || {});
+      setSummary({
+        pair: data.selected_pair ? data.selected_pair.join("/") : "-",
+        hedge_ratio: data.hedge_ratio !== undefined ? data.hedge_ratio : "-",
+        risk_level: data.risk_level || "-",
+        stop_loss: data.stop_loss !== undefined ? data.stop_loss : "-",
+        take_profit: data.take_profit !== undefined ? data.take_profit : "-"
+      });
       if (data.error) setError(data.error);
     } catch (err) {
       setError(err.message || "Failed to fetch strategy results");
@@ -92,6 +101,27 @@ export default function Dashboard() {
 
         {/* Content */}
         <main className="p-10 space-y-10 bg-gradient-to-br from-slate-900/60 to-cyan-900/40 flex-1">
+
+          {/* Strategy Summary */}
+          {summary.pair && (
+            <div className="mb-8 bg-white/10 rounded-xl p-6 flex flex-wrap gap-8 items-center shadow-lg">
+              <div>
+                <span className="text-cyan-300 font-bold">Pair:</span> <span className="text-white font-mono">{summary.pair}</span>
+              </div>
+              <div>
+                <span className="text-cyan-300 font-bold">Hedge Ratio:</span> <span className="text-white font-mono">{typeof summary.hedge_ratio === 'number' ? summary.hedge_ratio.toFixed(4) : summary.hedge_ratio}</span>
+              </div>
+              <div>
+                <span className="text-cyan-300 font-bold">Risk Level:</span> <span className="text-white font-mono">{summary.risk_level}</span>
+              </div>
+              <div>
+                <span className="text-cyan-300 font-bold">Stop-loss Z:</span> <span className="text-white font-mono">{summary.stop_loss}</span>
+              </div>
+              <div>
+                <span className="text-cyan-300 font-bold">Take-profit Z:</span> <span className="text-white font-mono">{summary.take_profit}</span>
+              </div>
+            </div>
+          )}
 
           {/* KPI Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
