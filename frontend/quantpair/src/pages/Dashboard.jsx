@@ -1,9 +1,34 @@
-import React from "react";
-import Card from "./components/Card";        
-import Button from "./components/Button"; 
-import ChartContainer from "./components/ChartContainer"; 
+import React, { useState, useEffect } from "react";
+import Card from "../components/Card";        
+import Button from "../components/Button"; 
+import { EquityCurveChart, PnLChart } from "../components/Charts";
+import { fetchStrategyResults } from "../api/strategy";
 
 export default function Dashboard() {
+  const [equityCurve, setEquityCurve] = useState([]);
+  const [pnl, setPnl] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleRunStrategy = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await fetchStrategyResults();
+      setEquityCurve(data.equity_curve || []);
+      setPnl(data.pnl || []);
+    } catch (err) {
+      setError("Failed to fetch strategy results");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    // Optionally fetch on mount
+    // handleRunStrategy();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white flex">
 
@@ -26,7 +51,7 @@ export default function Dashboard() {
         {/* Header */}
         <header className="bg-slate-900/60 backdrop-blur border-b border-slate-700 p-5 flex justify-between items-center">
           <h1 className="text-2xl font-bold">Pairs Trading Dashboard</h1>
-          <Button text="Run Strategy" onClick={() => alert("Running strategy...")} />
+          <Button text={loading ? "Running..." : "Run Strategy"} onClick={handleRunStrategy} />
         </header>
 
         {/* Content */}
@@ -40,10 +65,13 @@ export default function Dashboard() {
             <Card title="Win Rate" value="53%" />
           </div>
 
-          {/* Chart */}
+
+          {/* Charts */}
           <div className="bg-slate-900/60 backdrop-blur-lg rounded-xl shadow-xl p-6">
             <h2 className="text-xl font-semibold mb-4">Strategy Visualization</h2>
-            <ChartContainer />
+            {error && <div className="text-red-400 mb-4">{error}</div>}
+            <EquityCurveChart data={equityCurve} />
+            <PnLChart data={pnl} />
           </div>
 
         </main>
