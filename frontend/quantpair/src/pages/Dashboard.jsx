@@ -139,6 +139,9 @@ export default function Dashboard() {
                 <div key={ticker} className="flex flex-col items-center">
                   <span className="text-cyan-300 font-bold">{ticker}:</span>
                   <span className="text-white font-mono">{rec.action} {rec.action !== 'Hold' ? rec.quantity : ''}</span>
+                  {rec.reason && (
+                    <span className="text-sm text-cyan-100 mt-2">Reason: {rec.reason}</span>
+                  )}
                 </div>
               ))}
             </div>
