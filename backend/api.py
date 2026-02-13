@@ -55,6 +55,33 @@ def run_strategy(req: StrategyRequest):
     else:
         positions = signals_df
 
+    price_series = [
+        {"date": str(idx), ticker1: float(row[ticker1]), ticker2: float(row[ticker2])}
+        for idx, row in pair_data.iterrows()
+    ]
+
+    spread_with_mean = [
+        {"date": str(idx), "spread": float(spread.loc[idx]), "mean": float(mean.loc[idx]) if not pd.isna(mean.loc[idx]) else 0.0}
+        for idx in spread.index
+    ]
+
+    zscore_signals = []
+    zscore_vals = zscore if hasattr(zscore, 'index') else pd.Series(zscore)
+    for idx in zscore_vals.index:
+        val = float(zscore_vals.loc[idx])
+        signal = int(positions.loc[idx]) if idx in positions.index else 0
+        zscore_signals.append({
+            "date": str(idx),
+            "zscore": val,
+            "signal": signal
+        })
+
+    latest_signal = positions.iloc[-1] if hasattr(positions, 'iloc') else positions[-1]
+    action_map = {1: ("Buy", "Sell"), -1: ("Sell", "Buy"), 0: ("Hold", "Hold")}
+    action1, action2 = action_map.get(int(latest_signal), ("Hold", "Hold"))
+    qty1 = qty if action1 != "Hold" else 0
+    qty2 = qty if action2 != "Hold" else 0
+
     results = backtest_strategy(pair_data[ticker1], pair_data[ticker2], positions, beta, req.initial_capital)
 
     results["equity_curve"] = results["equity_curve"].replace([np.inf, -np.inf], np.nan).fillna(0)
@@ -93,7 +120,14 @@ def run_strategy(req: StrategyRequest):
         "risk_level": risk,
         "performance": performance,
         "equity_curve": equity_curve,
-        "pnl": pnl
+        "pnl": pnl,
+        "strategy_recommendation": {
+            ticker1: {"action": action1, "quantity": round(qty1, 2)},
+            ticker2: {"action": action2, "quantity": round(qty2, 2)}
+        },
+        "price_series": price_series,
+        "spread_with_mean": spread_with_mean,
+        "zscore_signals": zscore_signals
     }
 
 @app.get("/")

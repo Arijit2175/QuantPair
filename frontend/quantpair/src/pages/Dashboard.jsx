@@ -1,8 +1,8 @@
-
 import React, { useState, useEffect } from "react";
 import Card from "../components/Card";
 import Button from "../components/Button";
 import { EquityCurveChart, PnLChart } from "../components/Charts";
+import { PriceSeriesChart, SpreadWithMeanChart, ZScoreSignalsChart } from "../components/ExtraCharts";
 import { fetchStrategyResults } from "../api/strategy";
 export default function Dashboard() {
   const [equityCurve, setEquityCurve] = useState([]);
@@ -15,6 +15,10 @@ export default function Dashboard() {
   const [endDate, setEndDate] = useState("");
   const [initialCapital, setInitialCapital] = useState(10000);
   const [summary, setSummary] = useState({});
+  const [recommendation, setRecommendation] = useState(null);
+  const [priceSeries, setPriceSeries] = useState([]);
+  const [spreadWithMean, setSpreadWithMean] = useState([]);
+  const [zscoreSignals, setZscoreSignals] = useState([]);
 
   const handleRunStrategy = async (e) => {
     if (e) e.preventDefault();
@@ -45,6 +49,10 @@ export default function Dashboard() {
         stop_loss: data.stop_loss !== undefined ? data.stop_loss : "-",
         take_profit: data.take_profit !== undefined ? data.take_profit : "-"
       });
+      setRecommendation(data.strategy_recommendation || null);
+      setPriceSeries(data.price_series || []);
+      setSpreadWithMean(data.spread_with_mean || []);
+      setZscoreSignals(data.zscore_signals || []);
       if (data.error) setError(data.error);
     } catch (err) {
       setError(err.message || "Failed to fetch strategy results");
@@ -123,6 +131,19 @@ export default function Dashboard() {
             </div>
           )}
 
+          {/* Strategy Recommendation */}
+          {recommendation && (
+            <div className="mb-8 bg-cyan-900/40 rounded-xl p-6 flex flex-wrap gap-8 items-center shadow-lg border border-cyan-700">
+              <h3 className="text-xl font-bold text-cyan-200 w-full mb-2">Strategy Recommendation</h3>
+              {Object.entries(recommendation).map(([ticker, rec]) => (
+                <div key={ticker} className="flex flex-col">
+                  <span className="text-cyan-300 font-bold">{ticker}:</span>
+                  <span className="text-white font-mono">{rec.action} {rec.action !== 'Hold' ? rec.quantity : ''}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
           {/* KPI Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <Card title="Total Return" value={performance.total_return !== undefined ? `${(performance.total_return * 100).toFixed(2)}%` : "-"} />
@@ -136,6 +157,11 @@ export default function Dashboard() {
           <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8">
             <h2 className="text-2xl font-bold mb-6 text-cyan-200">Strategy Visualization</h2>
             {error && <div className="text-red-400 mb-4">{error}</div>}
+            {priceSeries.length > 0 && summary.pair && (
+              <PriceSeriesChart data={priceSeries} ticker1={summary.pair.split("/")[0]} ticker2={summary.pair.split("/")[1]} />
+            )}
+            {spreadWithMean.length > 0 && <SpreadWithMeanChart data={spreadWithMean} />}
+            {zscoreSignals.length > 0 && <ZScoreSignalsChart data={zscoreSignals} />}
             <EquityCurveChart data={equityCurve} />
             <PnLChart data={pnl} />
           </div>
