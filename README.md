@@ -116,5 +116,101 @@ A quick look at the **QuantPair Dashboard** and its features 📊🚀
 |--------|---------|---------|--------|
 | KO | PEP | 1.57 | 📉 Sell KO / 📈 Buy PEP |
 
+### 📌 Interpretation
+
+- 🥤 **KO (Coca-Cola)** is **overpriced** relative to PEP  
+- 🥤 **PEP (Pepsi)** is **underpriced** relative to KO  
+- 📊 Z-score of **1.57** indicates a divergence from the mean  
+- ⚡ Strategy suggests:  
+  - **Short (Sell) KO**  
+  - **Long (Buy) PEP**
+
+---
+
+## 📊 Metrics Evaluated
+
+QuantPair evaluates multiple statistical and trading metrics to identify strong asset pairs and generate reliable trading signals.
+
+### 📈 1. Price Spread
+
+**What it is:**  
+The difference between the prices of two assets.
+
+**How it is calculated:**
+Spread = Price(A) − Price(B)
+
+**Purpose:**  
+Helps measure how far apart two related assets have moved from each other.
+
+### 📊 2. Z-Score of Spread
+
+**What it is:**  
+A normalized value indicating how far the current spread deviates from its historical mean.
+
+**How it is calculated:**
+Z-score = (Spread − Mean Spread) / Standard Deviation
+
+**Purpose:**  
+- Identifies overvaluation and undervaluation  
+- Used to generate buy/sell signals  
+- Higher absolute value ⇒ stronger divergence
+
+### 🔗 3. Cointegration Score
+
+**What it is:**  
+A statistical test that checks if two assets move together in the long run.
+
+**How it is evaluated:**
+- Uses historical price series  
+- Applies cointegration test (e.g., Engle-Granger)
+
+**Purpose:**  
+Ensures only **statistically related pairs** are traded  
+Reduces false signals
+
+### 📉 4. Correlation
+
+**What it is:**  
+Measures short-term linear relationship between two assets.
+
+**How it is calculated:**
+Correlation = cov(A, B) / (std(A) × std(B))
+
+**Purpose:**  
+- Filters weakly related asset pairs  
+- Confirms similarity in price movement
+
+### ⚡ 5. Trading Signal
+
+**What it is:**  
+Final action recommendation based on Z-score thresholds.
+
+**How it is generated:**
+
+| Z-Score Range | Signal |
+|--------------|--------|
+| Z > +Threshold | 📉 Sell Asset A / 📈 Buy Asset B |
+| Z < -Threshold | 📈 Buy Asset A / 📉 Sell Asset B |
+| Between limits | ⏸️ Hold |
+
+### 🧪 6. Strategy Performance Metrics
+
+| Metric | Purpose |
+|--------|---------|
+| 📈 Total Return | Measures profit from strategy |
+| 📉 Max Drawdown | Measures worst loss |
+| 📊 Sharpe Ratio | Risk-adjusted return |
+| 🔁 Win Rate | Percentage of profitable trades |
+
+### 🎯 Why These Metrics?
+
+These metrics help ensure:
+- 📉 Mean reversion behavior  
+- 📊 Statistical validity  
+- ⚡ Actionable trading signals  
+- 🧠 Data-driven decisions  
+
+All calculations are based on historical price data and updated dynamically within the dashboard.
+
 ---
 
