@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Card from "../components/Card";
 import Button from "../components/Button";
-import { EquityCurveChart, PnLChart } from "../components/Charts";
-import { PriceSeriesChart, SpreadWithMeanChart, ZScoreSignalsChart } from "../components/ExtraCharts";
+import { MemoizedEquityCurveChart, MemoizedPnLChart } from "../components/Charts";
+import { MemoizedPriceSeriesChart, MemoizedSpreadWithMeanChart, MemoizedZScoreSignalsChart } from "../components/ExtraCharts";
+import { useMemo } from "react";
 import { fetchStrategyResults } from "../api/strategy";
 
 export default function Dashboard() {
@@ -62,6 +63,13 @@ export default function Dashboard() {
       setLoading(false);
     }
   };
+
+  // Memoize chart data to avoid unnecessary recalculations/rerenders
+  const memoEquityCurve = useMemo(() => equityCurve, [equityCurve]);
+  const memoPnl = useMemo(() => pnl, [pnl]);
+  const memoPriceSeries = useMemo(() => priceSeries, [priceSeries]);
+  const memoSpreadWithMean = useMemo(() => spreadWithMean, [spreadWithMean]);
+  const memoZscoreSignals = useMemo(() => zscoreSignals, [zscoreSignals]);
 
   return (
     <div className="relative min-h-screen flex flex-col bg-gradient-to-br from-slate-950 via-blue-950/5 to-slate-900 text-white overflow-hidden">
@@ -193,11 +201,11 @@ export default function Dashboard() {
               <h2 className="text-sm font-mono text-cyan-400 uppercase tracking-widest mb-8 font-semibold">Performance Visualization</h2>
               {error && <div className="text-red-400 text-sm mb-6 p-4 bg-red-950/20 rounded-lg border border-red-500/20">{error}</div>}
               <div className="space-y-6">
-                <PriceSeriesChart data={priceSeries} ticker1={summary.pair ? summary.pair.split("/")[0] : ""} ticker2={summary.pair ? summary.pair.split("/")[1] : ""} />
-                <SpreadWithMeanChart data={spreadWithMean} />
-                <ZScoreSignalsChart data={zscoreSignals} />
-                <EquityCurveChart data={equityCurve} />
-                <PnLChart data={pnl} />
+                <MemoizedPriceSeriesChart data={memoPriceSeries} ticker1={summary.pair ? summary.pair.split("/")[0] : ""} ticker2={summary.pair ? summary.pair.split("/")[1] : ""} />
+                <MemoizedSpreadWithMeanChart data={memoSpreadWithMean} />
+                <MemoizedZScoreSignalsChart data={memoZscoreSignals} />
+                <MemoizedEquityCurveChart data={memoEquityCurve} />
+                <MemoizedPnLChart data={memoPnl} />
               </div>
             </div>
 

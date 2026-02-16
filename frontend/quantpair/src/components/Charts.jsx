@@ -1,7 +1,7 @@
-import React from "react";
+import React, { memo } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
 
-export function EquityCurveChart({ data }) {
+const EquityCurveChart = ({ data }) => {
   return (
     <div className="bg-gradient-to-br from-slate-800/30 to-slate-900/50 backdrop-blur-sm rounded-xl p-6 mb-8 border border-cyan-500/20 hover:border-cyan-500/40 transition-all animate-fade-in-up">
       <h2 className="text-sm font-mono text-[#1e3a8a] uppercase tracking-widest mb-6 font-semibold">Equity Curve</h2>
@@ -17,8 +17,9 @@ export function EquityCurveChart({ data }) {
     </div>
   );
 }
+export const MemoizedEquityCurveChart = memo(EquityCurveChart);
 
-export function PnLChart({ data }) {
+const PnLChart = ({ data }) => {
   return (
     <div className="bg-gradient-to-br from-slate-800/30 to-slate-900/50 backdrop-blur-sm rounded-xl p-6 border border-cyan-500/20 hover:border-cyan-500/40 transition-all animate-fade-in-up">
       <h2 className="text-sm font-mono text-[#1e3a8a] uppercase tracking-widest mb-6 font-semibold">Profit & Loss</h2>
@@ -34,3 +35,4 @@ export function PnLChart({ data }) {
     </div>
   );
 }
+export const MemoizedPnLChart = memo(PnLChart);

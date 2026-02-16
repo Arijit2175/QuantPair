@@ -1,7 +1,7 @@
-import React from "react";
+import React, { memo } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine, BarChart, Bar, Scatter, Cell } from "recharts";
 
-export function PriceSeriesChart({ data, ticker1, ticker2 }) {
+const PriceSeriesChart = ({ data, ticker1, ticker2 }) => {
   return (
     <div className="bg-gradient-to-br from-slate-800/30 to-slate-900/50 backdrop-blur-sm rounded-xl p-6 mb-8 border border-cyan-500/20 hover:border-cyan-500/40 transition-all animate-fade-in-up">
       <h2 className="text-sm font-mono text-[#1e3a8a] uppercase tracking-widest mb-6 font-semibold">Price Series</h2>
@@ -26,8 +26,9 @@ export function PriceSeriesChart({ data, ticker1, ticker2 }) {
     </div>
   );
 }
+export const MemoizedPriceSeriesChart = memo(PriceSeriesChart);
 
-export function SpreadWithMeanChart({ data }) {
+const SpreadWithMeanChart = ({ data }) => {
   return (
     <div className="bg-gradient-to-br from-slate-800/30 to-slate-900/50 backdrop-blur-sm rounded-xl p-6 mb-8 border border-cyan-500/20 hover:border-cyan-500/40 transition-all animate-fade-in-up">
       <h2 className="text-sm font-mono text-[#1e3a8a] uppercase tracking-widest mb-6 font-semibold">Spread with Mean</h2>
@@ -52,8 +53,9 @@ export function SpreadWithMeanChart({ data }) {
     </div>
   );
 }
+export const MemoizedSpreadWithMeanChart = memo(SpreadWithMeanChart);
 
-export function ZScoreSignalsChart({ data }) {
+const ZScoreSignalsChart = ({ data }) => {
   // Prepare bar color for each signal
   const barData = data.map(d => ({
     ...d,
@@ -90,3 +92,4 @@ export function ZScoreSignalsChart({ data }) {
     </div>
   );
 }
+export const MemoizedZScoreSignalsChart = memo(ZScoreSignalsChart);

@@ -1,4 +1,6 @@
-export default function Card({ title, value }) {
+import React, { memo } from "react";
+
+const Card = ({ title, value }) => {
   return (
     <div className="bg-gradient-to-br from-slate-800/40 to-slate-900/60 backdrop-blur-sm rounded-xl p-6 border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10 group animate-fade-in-up">
       <h3 className="text-gray-400 text-xs font-mono uppercase tracking-widest mb-3 group-hover:text-cyan-400 transition-colors">{title}</h3>
@@ -7,3 +9,4 @@ export default function Card({ title, value }) {
     </div>
   );
 }
+export default memo(Card);
