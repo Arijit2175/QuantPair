@@ -223,3 +223,17 @@ QuantPair is already deployed and accessible online 🎉
 
 ---
 
+## 📚 References
+
+1. J. Sen, “Designing Efficient Pair-Trading Strategies Using Cointegration for the Indian Stock Market,” *IEEE International Conference ASIANCON'22*, Pune, India, 2022. 
+2. X. Law, W. Li & P. Yu, “A single-stage approach for cointegration-based pairs trading,” *Finance Research Letters*, vol. 26, pp. 177–184, 2018. 
+3. Y. Ti, T. Dai, K. Wang, et al., “Improving Cointegration-Based Pairs Trading Strategy with Asymptotic Analyses and Convergence Rate Filters,” *Computational Economics*, vol. 64, pp. 2717–2745, Jan. 2024. 
+4. M. Clegg & C. Krauss, “Pairs trading with partial cointegration,” *Quantitative Finance*, vol. 18(1), pp. 121–138, 2017. 
+5. H. Xing, “A singular stochastic control approach for optimal pairs trading with proportional transaction costs,” *arXiv*, Nov. 2019. 
+6. G. Zhang, “Pairs Trading with Nonlinear and Non-Gaussian State Space Models,” *arXiv*, May 2020. 
+7. Masood Tadi & Irina Kortchemski, “Evaluation of dynamic cointegration-based pairs trading strategy in the cryptocurrency market,” *Studies in Economics and Finance*, vol. 38, no. 5, 2021.   
+8. “Cointegration-based pairs trading: identifying and exploiting similar exchange-traded funds,” *Journal of Asset Management*, Springer, 2025. 
+9. C. Ungever, “Pairs Trading to the Commodities Futures Market Using Cointegration Method,” *International Journal of Commerce and Finance*, vol. 1, no. 1, 2015. 
+
+<br>
+
