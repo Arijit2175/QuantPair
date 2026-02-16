@@ -1,7 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Landing() {
+  const [uptime, setUptime] = useState(null);
+  const [latency, setLatency] = useState(null);
+  const referencePeriod = 86400; // 24 hours in seconds
+
+  useEffect(() => {
+    // Fetch uptime
+    fetch("http://localhost:8000/metrics/uptime")
+      .then((res) => res.json())
+      .then((data) => setUptime(data.uptime))
+      .catch(() => setUptime(null));
+    // Fetch latency
+    fetch("http://localhost:8000/metrics/latency")
+      .then((res) => res.json())
+      .then((data) => setLatency(data.latency))
+      .catch(() => setLatency(null));
+  }, []);
+
+  const uptimePercent =
+    uptime !== null ? ((uptime / referencePeriod) * 100).toFixed(2) : "0.05";
+  const latencyDisplay =
+    latency !== null ? `${latency.toFixed(1)}ms` : "0.0ms";
+
   return (
     <div className="relative min-h-screen flex flex-col bg-gradient-to-br from-slate-950 via-blue-950/5 to-slate-900 text-white overflow-hidden">
       {/* Grid background pattern */}
@@ -39,11 +61,11 @@ export default function Landing() {
           {/* Stats */}
           <div className="grid grid-cols-2 gap-6 mb-12 w-full text-center">
             <div className="border border-cyan-500/20 rounded-lg p-4 bg-slate-950/40 hover:bg-slate-950/60 transition-all">
-              <div className="text-cyan-400 font-mono text-xl font-bold">99.8%</div>
+              <div className="text-cyan-400 font-mono text-xl font-bold">{uptimePercent}%</div>
               <div className="text-gray-400 text-xs mt-1 font-light">Uptime</div>
             </div>
             <div className="border border-cyan-500/20 rounded-lg p-4 bg-slate-950/40 hover:bg-slate-950/60 transition-all">
-              <div className="text-cyan-400 font-mono text-xl font-bold">50ms</div>
+              <div className="text-cyan-400 font-mono text-xl font-bold">{latencyDisplay}</div>
               <div className="text-gray-400 text-xs mt-1 font-light">Latency</div>
             </div>
           </div>
