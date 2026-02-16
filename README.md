@@ -39,7 +39,7 @@ A perfect tool for traders, quants, and data-driven investors!
 | Visualization | Chart.js |
 | Deployment | Vercel / Render/ Cloud Hosting |
 
---
+---
 
 ## 📁 Project Structure
 
