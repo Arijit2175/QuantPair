@@ -30,3 +30,14 @@ A perfect tool for traders, quants, and data-driven investors!
 
 ---
 
+## 🛠 Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Frontend | JavaScript / React |
+| Backend | Python (FastAPI / Flask ) |
+| Visualization | Chart.js |
+| Deployment | Vercel / Render/ Cloud Hosting |
+
+--
+
