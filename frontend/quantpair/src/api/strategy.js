@@ -1,7 +1,9 @@
 // src/api/strategy.js
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export async function fetchStrategyResults({ tickers, start_date, end_date, initial_capital }) {
-  const response = await fetch("http://localhost:8000/run_strategy", {
+  const response = await fetch(`${API_URL}/run_strategy`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

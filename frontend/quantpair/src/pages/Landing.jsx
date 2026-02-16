@@ -7,13 +7,14 @@ export default function Landing() {
   const referencePeriod = 86400; // 24 hours in seconds
 
   useEffect(() => {
+    const API_URL = import.meta.env.VITE_API_URL;
     // Fetch uptime
-    fetch("http://localhost:8000/metrics/uptime")
+    fetch(`${API_URL}/metrics/uptime`)
       .then((res) => res.json())
       .then((data) => setUptime(data.uptime))
       .catch(() => setUptime(null));
     // Fetch latency
-    fetch("http://localhost:8000/metrics/latency")
+    fetch(`${API_URL}/metrics/latency`)
       .then((res) => res.json())
       .then((data) => setLatency(data.latency))
       .catch(() => setLatency(null));
