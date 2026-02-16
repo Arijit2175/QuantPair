@@ -18,3 +18,15 @@ A perfect tool for traders, quants, and data-driven investors!
 
 ---
 
+## 📦 Features
+
+| Feature | Description |
+|---------|-------------|
+| 📊 **Interactive Dashboard** | Frontend UI to visualize price spreads and signals |
+| 📈 **Pairs Strategy Logic** | Compute co-integration and trading signals |
+| 🔄 **Backend API** | Serve data and analytics securely |
+| 🧪 **Strategy Testing** | Test historic data to validate signals |
+| 📁 **Modular Architecture** | Separate frontend and backend projects |
+
+---
+
