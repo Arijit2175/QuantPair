@@ -41,3 +41,30 @@ A perfect tool for traders, quants, and data-driven investors!
 
 --
 
+## 📁 Project Structure
+
+```
+QuantPair/
+├── backend/ 
+      ├── api.py
+      ├── backtest.py
+      ├── data_acquisition.py
+      ├── hedge_ratio.py
+      ├── pair_selection.py
+      ├── risk_management.py
+      ├── run.py
+      ├── spread_signal.py
+      ├── trading_rules.py
+      ├── visualization_data.py
+      ├── visualization.py
+      └── requirements.txt             
+├── frontend/quantpair/
+        ├── public/
+        ├── src/
+            ├── pages/
+            ├── api/
+            └── components/
+        └── index.html            
+└── README.md               
+```
+
