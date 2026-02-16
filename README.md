@@ -68,6 +68,8 @@ QuantPair/
 └── README.md               
 ```
 
+---
+
 ## ⚙️ Installation & Setup
 
 ### 📥 Clone the Repository
@@ -90,6 +92,21 @@ pip install -r requirements.txt
 cd frontend/quantpair
 npm install
 ```
+
+---
+
+## 👀 Preview
+
+A quick look at the **QuantPair Dashboard** and its features 📊🚀
+
+---
+
+### 🖥️ Dashboard View
+
+| Feature | Preview |
+|--------|---------|
+| 📈 Pair Price Chart | ![Pair Chart](frontend/quantpair/src/assets/pair_chart.png) |
+| 📊 Spread & Z-Score | ![Spread Chart](frontend/quantpair/src/assets/spread_chart.png) |
 
 ---
 
