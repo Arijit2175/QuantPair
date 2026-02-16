@@ -6,3 +6,15 @@ A complete end-to-end dashboard built with a frontend UI and backend logic to su
 
 ---
 
+## 🧠 About
+
+QuantPair is an interactive **Pairs Trading Dashboard** that helps you:
+
+✔ Explore statistical relationships between asset pairs  
+✔ Generate trading signals using classic quantitative finance techniques  
+✔ Track performance and visualize entry/exit opportunities
+
+A perfect tool for traders, quants, and data-driven investors! 
+
+---
+
