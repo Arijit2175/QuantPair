@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 import numpy as np
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -11,8 +11,22 @@ from spread_signal import compute_spread, compute_rolling_stats, compute_zscore
 from trading_rules import generate_trade_signals
 from risk_management import calculate_position_size, set_stop_loss_take_profit, assign_risk_level
 from backtest import backtest_strategy
+import time
 
 app = FastAPI()
+
+start_time = time.time()
+@app.get("/metrics/uptime")
+async def get_uptime():
+    uptime = time.time() - start_time
+    return {"uptime": uptime}
+
+@app.get("/metrics/latency")
+async def get_latency(request: Request):
+    start = time.time()
+    await request.body()
+    latency = (time.time() - start) * 1000  
+    return {"latency": latency}
 
 app.add_middleware(
     CORSMiddleware,
