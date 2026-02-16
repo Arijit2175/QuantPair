@@ -214,3 +214,12 @@ All calculations are based on historical price data and updated dynamically with
 
 ---
 
+## 🌐 Deployment
+
+QuantPair is already deployed and accessible online 🎉
+
+🔗 **Live Application:**  
+👉 https://quant-pair.vercel.app/
+
+---
+
