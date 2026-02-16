@@ -35,7 +35,7 @@ A perfect tool for traders, quants, and data-driven investors!
 | Layer | Technology |
 |-------|------------|
 | Frontend | JavaScript / React |
-| Backend | Python (FastAPI / Flask ) |
+| Backend | Python (FastAPI / Flask / Pandas / Numpy / Yfinance) |
 | Visualization | Chart.js |
 | Deployment | Vercel / Render/ Cloud Hosting |
 
