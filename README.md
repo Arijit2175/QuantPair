@@ -110,3 +110,11 @@ A quick look at the **QuantPair Dashboard** and its features 📊🚀
 
 ---
 
+### 🧪 Strategy Signal Example
+
+| Asset A | Asset B | Z-Score | Signal |
+|--------|---------|---------|--------|
+| KO | PEP | 1.57 | 📉 Sell KO / 📈 Buy PEP |
+
+---
+
