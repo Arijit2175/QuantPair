@@ -1,4 +1,4 @@
-# 🚀 QuantPair
+# 📈 QuantPair
 
 **A dashboard for pair trading strategy system** 📈📊 — visualize, analyze, and manage statistically paired assets.
 
@@ -67,4 +67,29 @@ QuantPair/
         └── index.html            
 └── README.md               
 ```
+
+## ⚙️ Installation & Setup
+
+### 📥 Clone the Repository
+
+```
+git clone https://github.com/Arijit2175/QuantPair.git
+cd QuantPair
+```
+
+### 🧠 Backend Setup
+
+```
+cd backend
+pip install -r requirements.txt
+```
+
+### 🎨 Frontend Setup
+
+```
+cd frontend/quantpair
+npm install
+```
+
+---
 
