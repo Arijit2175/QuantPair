@@ -237,3 +237,4 @@ QuantPair is already deployed and accessible online 🎉
 
 <br>
 
+**Developed by** - @Arijit2175
